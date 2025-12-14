@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "nodenext",
+    "target": "es2019",
+    "types": ["node"],
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+"noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true
+  }
+}
