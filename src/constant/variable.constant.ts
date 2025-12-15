@@ -1,0 +1,1 @@
+export const DbName:string="LMS-system"

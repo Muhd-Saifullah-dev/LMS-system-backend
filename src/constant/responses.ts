@@ -56,7 +56,7 @@ class Responses {
         error: null,
         message,
     });
-    bad_request_error = (error = null, data: any = null) => ({
+    bad_request_error = (error:string|null = null, data: any = null) => ({
         status: {
             code: 400,
             success: false,
@@ -65,7 +65,7 @@ class Responses {
         message: error,
     });
 
-    not_found_error = (error = null) => ({
+    not_found_error = (error:string|null = null) => ({
         status: {
             code: 404,
             success: false,
