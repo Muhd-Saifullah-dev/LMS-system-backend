@@ -9,8 +9,11 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 const PORT:number = Number(process.env.PORT )|| 8080;
 const MONGO_URI:string=process.env.MONGO_URI || ""
-
+const PASSWORD=process.env.SMTP_PASSWORD
+const EMAIL=process.env.SMTP_EMAIL
 export{
 PORT,
 MONGO_URI,
+PASSWORD,
+EMAIL
 }

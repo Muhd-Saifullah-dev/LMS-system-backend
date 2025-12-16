@@ -25,6 +25,7 @@ export interface IUser extends Document {
     verificationCodeExpire?: Date;
     resetPasswordToken?: string;
     resetPasswordExpire?: Date;
+    generateVerificationCode():number
     createdAt: Date;
     updatedAt: Date;
 }
@@ -80,6 +81,20 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     { timestamps: true },
 );
 
+userSchema.methods.generateVerificationCode=function(){
+    function generateOtp(){
+        let otp="";
+        for(let i=0;i<6;i++){
+            otp+=Math.floor(Math.random() *10)
+        }
+        return Number(otp)
+    }
+
+    const verificationCode=generateOtp()
+    this.verificationCode=verificationCode
+    this.verificationCodeExpire=Date.now() + 15 *60 *1000
+    return verificationCode
+}
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
 export default User;

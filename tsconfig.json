@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+     "@app/*": ["api/v1/*"],
+  "@config/*": ["config/*"],
+  "@utils/*": ["utils/*"]
+    },
     "rootDir": "./src",
     "outDir": "./dist",
     "module": "nodenext",
