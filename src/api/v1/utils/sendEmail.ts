@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import {EMAIL,PASSWORD } from "@config/env.config.ts"
+import {EMAIL,PASSWORD } from "../../../config/env.config.ts"
 
 type sendEmailOption ={
     toEmail:string,

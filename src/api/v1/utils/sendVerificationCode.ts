@@ -10,7 +10,6 @@ export async function sendVerificationCode(verificationCode: number, email: stri
             message,
         });
         res.status(200)
-            .json(200)
             .json({ success: true, message: "verification code sent successfully" });
     } catch (err) {
         res.status(500).json({ success: false, message: `verification code failed to send` });

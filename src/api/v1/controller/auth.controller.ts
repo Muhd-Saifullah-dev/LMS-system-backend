@@ -13,7 +13,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
             return res.json(responses.generic_response(401, false, null, "all field are required"));
         }
         const isRegister = await User.find({ email, accountVerified: true });
-        if (isRegister) {
+        if (isRegister.length>0) {
             return res.json(responses.bad_request_error("user is already exist", null));
         }
         const registerationAttemptByUser = await User.find({
@@ -37,11 +37,17 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
         const verificationCode = await user.generateVerificationCode();
         await sendVerificationCode(verificationCode, user.email, res);
-        await user.save();
+        await user.save()
     } catch (error: any) {
         console.log(`error in register :: ${error}`);
         next(error);
     }
 };
 
-
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+    } catch (error) {
+        console.log(`error in login :: ${error}`);
+        next(error);
+    }
+};

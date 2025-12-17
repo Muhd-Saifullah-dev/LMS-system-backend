@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response, NextFunction, Application } from "express";
 import { req_logger } from "./config/logger.ts";
 import globalMiddleware from "./api/v1/middleware/global.middleware.ts";
+import apiV1Router from "./api/v1/routes/apiV1.router.ts";
 const app: Application = express();
 
 app.use(express.json({ limit: "100mb" }));
@@ -14,6 +15,8 @@ app.get("/health-check", (req: Request, res: Response, next: NextFunction) => {
     return res.status(200).json({ success: true, message: "server is running up" });
 });
 
-app.use(globalMiddleware)
+app.use("/api/v1", apiV1Router);
+
+app.use(globalMiddleware);
 
 export default app;
