@@ -44,6 +44,88 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
+
+
+export const verifyOtp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, otp } = req.body;
+
+    // 1️⃣ Validation
+    if (!email || !otp) {
+      return res.json(
+        responses.bad_request_error("email and otp is missing", null)
+      );
+    }
+
+    // 2️⃣ Find all unverified users with same email
+    const userAllEntries = await User.find({
+      email,
+      accountVerified: false,
+    }).sort({ createdAt: -1 });
+
+    if (userAllEntries.length === 0) {
+      return res.json(
+        responses.bad_request_error("user not found", null)
+      );
+    }
+
+    // 3️⃣ Keep latest entry only
+    const user = userAllEntries[0];
+
+    if (userAllEntries.length > 1) {
+      await User.deleteMany({
+        _id: { $ne: user._id },
+        email,
+        accountVerified: false,
+      });
+    }
+
+    // 4️⃣ OTP match
+    if (user.verificationCode !== Number(otp)) {
+      return res.json(
+        responses.bad_request_error("otp is invalid", null)
+      );
+    }
+
+    if (!user.verificationCodeExpire) {
+  return res.json(
+    responses.bad_request_error("otp expired or invalid", null)
+  );
+}
+
+    // 5️⃣ OTP expiry
+    const currentTime = Date.now();
+    const verificationCodeExpire = new Date(
+      user.verificationCodeExpire
+    ).getTime();
+
+    if (currentTime > verificationCodeExpire) {
+      return res.json(
+        responses.bad_request_error("otp is expired", null)
+      );
+    }
+
+user.accountVerified=true;
+user.verificationCode=undefined;
+user.verificationCodeExpire=undefined
+ 
+
+    await user.save();
+
+    return res.json(
+      responses.create_success_response(user)
+    );
+
+  } catch (error) {
+    console.log(`error in verify otp :: ${error}`);
+    next(error);
+  }
+};
+
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
     } catch (error) {

@@ -22,7 +22,7 @@ export interface IUser extends Document {
     borrowedBooks: IBorrowedBook[];
     avatar?: IAvatar;
     verificationCode?: number;
-    verificationCodeExpire?: Date;
+    verificationCodeExpire?: Date | undefined;
     resetPasswordToken?: string;
     resetPasswordExpire?: Date;
     generateVerificationCode():number
@@ -92,7 +92,7 @@ userSchema.methods.generateVerificationCode=function(){
 
     const verificationCode=generateOtp()
     this.verificationCode=verificationCode
-    this.verificationCodeExpire=Date.now() + 15 *60 *1000
+    this.verificationCodeExpire=new Date(Date.now() + 15 * 60 * 1000);
     return verificationCode
 }
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>("User", userSchema);

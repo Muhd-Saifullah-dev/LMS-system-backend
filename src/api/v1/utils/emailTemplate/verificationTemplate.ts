@@ -1,33 +1,38 @@
 export async function generateVerificationOtpEmailTemplate(otp:number):Promise<string>{
     return`
-        <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your OTP Code</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-    <div class="max-w-2xl mx-auto my-8 bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="bg-indigo-600 py-6 px-8">
-            <h1 class="text-3xl font-bold text-white text-center">Your OTP Code</h1>
+  <html>
+    <body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial, sans-serif;">
+      <div style="max-width:600px;margin:30px auto;background:#ffffff;border-radius:8px;overflow:hidden;">
+        
+        <div style="background:#4f46e5;padding:20px;text-align:center;">
+          <h1 style="color:#ffffff;margin:0;font-size:26px;">
+            Your OTP Code
+          </h1>
         </div>
-        <div class="p-8">
-            <p class="text-gray-700 mb-6">Hello,</p>
-            <p class="text-gray-700 mb-6">Your One-Time Password (OTP) for account verification is:</p>
-            <div class="bg-gray-100 rounded-lg p-4 mb-6">
-                <p class="text-4xl font-bold text-center text-indigo-600">${otp}</p>
-            </div>
-            <p class="text-gray-700 mb-6">This OTP is valid for <span class="font-semibold">2 minutes</span>. Please do not share this code with anyone.</p>
-            <p class="text-gray-700 mb-2">If you didn't request this code, please ignore this email.</p>
-            <p class="text-gray-700">Thank you for using our service!</p>
+
+        <div style="padding:30px;color:#374151;">
+          <p>Hello,</p>
+          <p>Your One-Time Password (OTP) for account verification is:</p>
+
+          <div style="background:#f3f4f6;padding:15px;border-radius:6px;text-align:center;margin:20px 0;">
+            <span style="font-size:32px;font-weight:bold;color:#4f46e5;">
+              ${otp}
+            </span>
+          </div>
+
+          <p>This OTP is valid for <b>2 minutes</b>. Please do not share it with anyone.</p>
+          <p>If you did not request this code, please ignore this email.</p>
+
+          <p style="margin-top:30px;">Thank you,<br/>Your Company Team</p>
         </div>
-        <div class="bg-gray-100 py-4 px-8">
-            <p class="text-sm text-gray-600 text-center">&copy; 2024 Your Company Name. All rights reserved.</p>
+
+        <div style="background:#f3f4f6;text-align:center;padding:12px;font-size:12px;color:#6b7280;">
+          © 2024 Your Company. All rights reserved.
         </div>
-    </div>
-</body>
-</html>
-    `
+
+      </div>
+    </body>
+  </html>
+  `;
     
 }
