@@ -106,8 +106,34 @@ export const verifyOtp = async (req: Request, res: Response, next: NextFunction)
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.json(responses.bad_request_error("email and password is incorrect", null));
+        }
+        const user = await User.findOne({ email, accountVerified: true }).select("+password");
+        if (!user) {
+            return res.json(responses.bad_request_error("Invalid crediential"));
+        }
+        const matchedPassword = await bcrypt.compare(password, user.password);
+        if (!matchedPassword) {
+            return res.json(responses.bad_request_error("Invalid password"));
+        }
+        sendToken(user, 200, "User logged in successfully", res);
     } catch (error) {
         console.log(`error in login :: ${error}`);
+        next(error);
+    }
+};
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.cookie("token", "", {
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        });
+        return res.json(responses.ok_response(null, "user loggout successfully"));
+    } catch (error) {
+        console.log(`error in logout :: ${error}`);
         next(error);
     }
 };
